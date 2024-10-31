@@ -133,6 +133,41 @@ public class ArraysUtil
 		}
 		arr = temp;
 	}
+	public int[] expandArray(int arr[], int capacity)
+	{
+		int temp[] = new int[capacity];
+		for(int i = 0; i < arr.length; i++)
+		{
+			temp[i] = arr[i];
+		}
+		return temp;
+	}
+	public int findMisingNumber(int arr[])
+	{
+		int n = arr.length + 1;
+		int sum = n * (n+1)/2;
+		for(int i = 0; i < n - 1; i++)
+		{
+			sum -= arr[i];
+		}
+		return sum;
+	}
+	public boolean isPalindrome(String word)
+	{
+		char[] charArray = word.toCharArray();
+		int start = 0;
+		int end = word.length() -1;
+		while(start < end)
+		{
+			if(charArray[start] != charArray[end])
+			{
+				return false;
+			}
+			start++;
+			end--;
+		}
+		return true;
+	}
 	public static void main(String args[])
 	{
 		int myArray[] = new int[]{1,2,45,0,0,32,0,4,59,6,70,3};
@@ -196,11 +231,38 @@ public class ArraysUtil
 		arrUtil.printArray(copyArr);
 		System.out.println();
 
-		//Resize an Array - Buggy (Garbage Collected as they call it here)
+		// Resize an Array - Buggy (Garbage Collected as they call it here)
+		// After exiting the function scope it is deleted
 		int l_myArray= myArray.length;
 		System.out.println("Size of the Array before expand: "+ l_myArray);
 		arrUtil.expandArray_buggy(myArray, 20);
+		l_myArray= myArray.length;
 		System.out.println("Size of the Array after expand: "+ l_myArray);
+
+		// Here we are returning the array so it keep its size
+		l_myArray= myArray.length;
+		System.out.println("Size of the Array before expand: "+ l_myArray);
+		myArray = arrUtil.expandArray(myArray, 20);
+		l_myArray= myArray.length;
+		System.out.println("Size of the Array after expand: "+ l_myArray);
+
+		//Finding the missing number of an array
+		int newArray[] = new int[]{10,8,4,6,7,2,3,1,9};
+		int mn = arrUtil.findMisingNumber(newArray);
+		arrUtil.printArray(newArray);
+		System.out.println("The missing number in the array is: "+ mn);
+
+		// Check if a string is palindrome or not
+		String pali = new String("examaxe");
+		String notpali = new String("Examaxe");
+		if(arrUtil.isPalindrome(pali) == true)
+		{
+			System.out.println(pali + " Is palindrome");
+		}
+		if(arrUtil.isPalindrome(notpali) != true)
+		{
+			System.out.println(notpali + " Is not palindrome");
+		}
 		
 	}
 }
